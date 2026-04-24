@@ -9,7 +9,6 @@ HandleInputs :: proc(
     deltaTime: f32
 ) {
     linearStep: f32 = (rl.IsKeyDown(rl.KeyboardKey.LEFT_SHIFT) ? 0.25 : 1) * deltaTime
-    angularStep: f32 = (rl.IsKeyDown(rl.KeyboardKey.LEFT_SHIFT) ? 12 : 48) * deltaTime
 
     if rl.IsKeyDown(rl.KeyboardKey.W) do model.translation.z += linearStep
     if rl.IsKeyDown(rl.KeyboardKey.S) do model.translation.z -= linearStep
