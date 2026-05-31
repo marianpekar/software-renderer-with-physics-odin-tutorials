@@ -17,14 +17,14 @@ UP :: Vector2{0,-1}
 DOWN :: Vector2{0,1}
 LEFT :: Vector2{-1,0}
 RIGHT :: Vector2{1,0}
-STRENGHT :: 100
+STRENGTH :: 100
 DAMPING :: 0.99
 
 HandleInputs :: proc(particle: ^Particle) {
-    if rl.IsKeyDown(rl.KeyboardKey.W) do particle.force += UP * STRENGHT
-    if rl.IsKeyDown(rl.KeyboardKey.S) do particle.force += DOWN * STRENGHT
-    if rl.IsKeyDown(rl.KeyboardKey.A) do particle.force += LEFT * STRENGHT
-    if rl.IsKeyDown(rl.KeyboardKey.D) do particle.force += RIGHT * STRENGHT
+    if rl.IsKeyDown(rl.KeyboardKey.W) do particle.force += UP * STRENGTH
+    if rl.IsKeyDown(rl.KeyboardKey.S) do particle.force += DOWN * STRENGTH
+    if rl.IsKeyDown(rl.KeyboardKey.A) do particle.force += LEFT * STRENGTH
+    if rl.IsKeyDown(rl.KeyboardKey.D) do particle.force += RIGHT * STRENGTH
 }
 
 Integrate :: proc(particle: ^Particle, deltaTime: f32) {
