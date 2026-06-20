@@ -10,12 +10,12 @@ ApplyPhysics :: proc(models: []Model, deltaTime: f32) {
     for &model in models {
         if model.rigidBody.isStatic do continue
 
-        ApplyGravity(&model, models, deltaTime)
+        ApplyGravity(&model, deltaTime)
         IntegrateLinearForce(&model, deltaTime)
     }
 }
 
-ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
+ApplyGravity :: proc(model: ^Model, deltaTime: f32) {
     model.rigidBody.velocity += GRAVITY * deltaTime
 }
 
