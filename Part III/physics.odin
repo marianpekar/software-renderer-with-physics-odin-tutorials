@@ -3,7 +3,6 @@ package main
 RigidBody :: struct {
     force: Vector3,
     velocity: Vector3,
-    torque: Vector3,
     isStatic: bool
 }
 
