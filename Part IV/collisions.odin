@@ -85,8 +85,8 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
         radiusA := ProjectRadius(colSizeA, axesA, normalizedAxis)
         radiusB := ProjectRadius(colSizeB, axesB, normalizedAxis)
 
-        centerProj := abs(Vector3DotProduct(centerDiff, normalizedAxis))
-        overlap    := radiusA + radiusB - centerProj
+        projection := abs(Vector3DotProduct(centerDiff, normalizedAxis))
+        overlap    := radiusA + radiusB - projection
 
         if overlap <= 0 do return CollisionResult{hit = false}
 
