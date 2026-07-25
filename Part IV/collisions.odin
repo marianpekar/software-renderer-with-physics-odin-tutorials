@@ -91,13 +91,9 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
         }
     }
 
-    if Vector3DotProduct(direction, minNormal) < 0 {
-        minNormal = -minNormal
-    }
-
     return CollisionResult{
         hit = true, 
-        normal = minNormal, 
+        normal = -minNormal if Vector3DotProduct(direction, minNormal) < 0 else minNormal, 
         depth = minDepth
     }
 
