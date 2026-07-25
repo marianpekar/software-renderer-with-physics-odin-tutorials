@@ -51,9 +51,6 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
     axesA := GetAxesFromRotationMatrix(a.rotationMatrix)
     axesB := GetAxesFromRotationMatrix(b.rotationMatrix)
 
-    colSizeA := a.collider * a.scale
-    colSizeB := b.collider * b.scale
-
     centerDiff := b.translation - a.translation
 
     axes: [15]Vector3
@@ -80,8 +77,8 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
 
         normalizedAxis := Vector3Normalize(axis)
 
-        radiusA := ProjectRadius(colSizeA, axesA, normalizedAxis)
-        radiusB := ProjectRadius(colSizeB, axesB, normalizedAxis)
+        radiusA := ProjectRadius(a.collider * a.scale, axesA, normalizedAxis)
+        radiusB := ProjectRadius(b.collider * b.scale, axesB, normalizedAxis)
 
         projection := abs(Vector3DotProduct(centerDiff, normalizedAxis))
         overlap    := radiusA + radiusB - projection
@@ -104,9 +101,9 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
         depth = minDepth
     }
 
-    ProjectRadius :: proc(colSize: Vector3, axes: [3]Vector3, axis: Vector3) -> f32 {
-    return colSize.x * abs(Vector3DotProduct(axes[0], axis)) +
-           colSize.y * abs(Vector3DotProduct(axes[1], axis)) +
-           colSize.z * abs(Vector3DotProduct(axes[2], axis))
+    ProjectRadius :: proc(collider: Vector3, axes: [3]Vector3, axis: Vector3) -> f32 {
+    return collider.x * abs(Vector3DotProduct(axes[0], axis)) +
+           collider.y * abs(Vector3DotProduct(axes[1], axis)) +
+           collider.z * abs(Vector3DotProduct(axes[2], axis))
     }
 }
