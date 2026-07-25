@@ -27,7 +27,7 @@ LoadModel :: proc(meshPath: string, texturePath: cstring, color: rl.Color = rl.W
 }
 
 AddBoxCollider :: proc(model: ^Model, size: Vector3 = { 1.0, 1.0, 1.0 }) {
-    model.collider = BoxCollider{size = size}
+    model.collider = size
 }
 
 RotateAround :: proc(model: ^Model, axis: Vector3, angle: f32) {

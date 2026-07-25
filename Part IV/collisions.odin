@@ -1,9 +1,7 @@
 
 package main
 
-BoxCollider :: struct {
-    size: Vector3
-}
+BoxCollider :: Vector3
 
 CollisionResult :: struct {
     hit: bool,
@@ -53,8 +51,8 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
     axesA := GetAxesFromRotationMatrix(a.rotationMatrix)
     axesB := GetAxesFromRotationMatrix(b.rotationMatrix)
 
-    colSizeA := a.collider.size * a.scale
-    colSizeB := b.collider.size * b.scale
+    colSizeA := a.collider * a.scale
+    colSizeB := b.collider * b.scale
 
     centerDiff := b.translation - a.translation
 
