@@ -51,8 +51,6 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
     axesA := GetAxesFromRotationMatrix(a.rotationMatrix)
     axesB := GetAxesFromRotationMatrix(b.rotationMatrix)
 
-    centerDiff := b.translation - a.translation
-
     axes: [15]Vector3
     axes[0] = axesA[0]
     axes[1] = axesA[1]
@@ -69,6 +67,8 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
         }
     }
 
+    direction := b.translation - a.translation
+    
     minDepth: f32 = max(f32)
     minNormal: Vector3
 
@@ -80,7 +80,7 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
         radiusA := ProjectRadius(a.collider * a.scale, axesA, normalizedAxis)
         radiusB := ProjectRadius(b.collider * b.scale, axesB, normalizedAxis)
 
-        projection := abs(Vector3DotProduct(centerDiff, normalizedAxis))
+        projection := abs(Vector3DotProduct(direction, normalizedAxis))
         overlap    := radiusA + radiusB - projection
 
         if overlap <= 0 do return CollisionResult{hit = false}
@@ -91,7 +91,7 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
         }
     }
 
-    if Vector3DotProduct(centerDiff, minNormal) < 0 {
+    if Vector3DotProduct(direction, minNormal) < 0 {
         minNormal = -minNormal
     }
 
