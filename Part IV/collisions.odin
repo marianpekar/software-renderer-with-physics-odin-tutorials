@@ -97,7 +97,7 @@ GetCollisionResult :: proc(a, b: ^Model) -> CollisionResult {
         depth = minDepth
     }
 
-    ProjectRadius :: proc(collider: Vector3, axes: [3]Vector3, axis: Vector3) -> f32 {
+    ProjectRadius :: proc(collider: BoxCollider, axes: [3]Vector3, axis: Vector3) -> f32 {
     return collider.x * abs(Vector3DotProduct(axes[0], axis)) +
            collider.y * abs(Vector3DotProduct(axes[1], axis)) +
            collider.z * abs(Vector3DotProduct(axes[2], axis))
