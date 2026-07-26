@@ -18,6 +18,9 @@ ResolveCollisions :: proc(models: []Model) {
 
             if a.rigidBody.isStatic && b.rigidBody.isStatic do continue
 
+            if (a.collider.x * a.collider.y * a.collider.z < 1e-6 || 
+                b.collider.x * b.collider.y * b.collider.z < 1e-6) { continue }
+
             result := GetCollisionResult(a, b)
 
             if result.hit {
