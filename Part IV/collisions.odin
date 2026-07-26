@@ -6,8 +6,7 @@ BoxCollider :: Vector3
 CollisionResult :: struct {
     hit: bool,
     normal: Vector3,
-    depth: f32,
-    contactPoint: Vector3
+    depth: f32
 }
 
 ResolveCollisions :: proc(models: []Model) {
