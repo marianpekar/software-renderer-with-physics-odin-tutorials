@@ -5,7 +5,6 @@ import "core:math"
 Ray :: struct {
     hit: bool,
     model: ^Model,
-    position: Vector3,
     direction: Vector3
 }
 
@@ -62,7 +61,6 @@ CastRay :: proc(screenX, screenY: f32, camera: Camera, projType: ProjectionType,
             closestDist = tMin
             ray.hit = true
             ray.model = &model
-            ray.position = rayOrigin + rayDir * tMin
             ray.direction = rayDir
         }
     }
