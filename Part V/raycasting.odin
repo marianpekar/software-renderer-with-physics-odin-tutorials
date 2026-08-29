@@ -13,9 +13,9 @@ CastRay :: proc(screenX, screenY: f32, camera: Camera, projType: ProjectionType,
     ndcY := (screenY / f32(SCREEN_HEIGHT)) * 2.0 - 1.0
 
     rayOrigin := GetRayOrigin(ndcX, ndcY, camera, projType)
-    rayDir := GetRayDirection(ndcX, ndcY, camera, projType)
 
     ray: Ray
+    ray.direction = GetRayDirection(ndcX, ndcY, camera, projType)
     closestDist := max(f32)
 
     for &model in models {
@@ -32,7 +32,7 @@ CastRay :: proc(screenX, screenY: f32, camera: Camera, projType: ProjectionType,
         for i in 0..<3 {
             axis := axes[i]
             e := Vector3DotProduct(axis, delta)
-            f := Vector3DotProduct(axis, rayDir)
+            f := Vector3DotProduct(axis, ray.direction)
 
             t1 := (e + size[i]) / f
             t2 := (e - size[i]) / f
@@ -54,7 +54,6 @@ CastRay :: proc(screenX, screenY: f32, camera: Camera, projType: ProjectionType,
             closestDist = tMin
             ray.hit = true
             ray.model = &model
-            ray.direction = rayDir
         }
     }
 
