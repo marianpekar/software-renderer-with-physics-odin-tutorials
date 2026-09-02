@@ -51,7 +51,7 @@ ResolveCollisions :: proc(models: []Model) {
         rb, has_rb := &model.rigidBody.(RigidBody)
         if !has_rb || rb.isStatic do return
         
-        rb.velocity -= Vector3DotProduct(model.rigidBody.?.velocity, normal) * normal
+        rb.velocity -= Vector3DotProduct(rb.velocity, normal) * normal
     }
 }
 
