@@ -18,7 +18,7 @@ main :: proc() {
     AddBoxCollider(&cubeL)
     AddBoxCollider(&cubeFloor)
 
-    AddRigidbody(&cubeM, bounciness = 1.0, friction = 3.0)
+    AddRigidbody(&cubeM, bounciness = 2.0, friction = 3.0)
     AddRigidbody(&cubeL)
 
     cubeM.translation = {0.0, 2.0, 1.0}
