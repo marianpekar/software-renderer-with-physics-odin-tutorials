@@ -22,14 +22,35 @@ ApplyPhysics :: proc(models: []Model, deltaTime: f32) {
         rb, has_rb := model.rigidBody.?
         if !has_rb || rb.isStatic do continue
 
-        ApplyGravity(&model, deltaTime)
+        ApplyGravity(&model, models, deltaTime)
         IntegrateLinearForce(&model, deltaTime)
     }
 }
 
-ApplyGravity :: proc(model: ^Model, deltaTime: f32) {
+ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
     rb := &model.rigidBody.(RigidBody)
     rb.velocity += GRAVITY * deltaTime
+
+    for &other in models {
+        if &other == model do continue
+
+        model.translation.y -= GROUND_PROBE_DIST
+        probe := GetCollisionResult(model, &other)
+        model.translation.y += GROUND_PROBE_DIST
+
+        if probe.hit {
+            ApplyFriction(model, other)
+        }
+    }
+}
+
+ApplyFriction :: proc(model: ^Model, other: Model) {
+    rbo, has_rbo := other.rigidBody.?
+    avgFriction := (model.rigidBody.?.friction + rbo.friction) * 0.5 if has_rbo else (model.rigidBody.?.friction + 1.0) * 0.5
+
+    rb := &model.rigidBody.(RigidBody)
+    rb.force.x *= avgFriction
+    rb.force.z *= avgFriction
 }
 
 IntegrateLinearForce :: proc(model: ^Model, deltaTime: f32) {

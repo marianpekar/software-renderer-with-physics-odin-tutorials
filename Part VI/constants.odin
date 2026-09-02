@@ -11,4 +11,6 @@ PHYSICS_TIMESTEP :: 1.0 / 60.0
 GRAVITY :: Vector3{0.0, -9.8, 0.0}
 LINEAR_DRAG :: f32(0.98)
 
+GROUND_PROBE_DIST :: 0.05
+
 WORLD_UP :: Vector3{0, 1, 0}
