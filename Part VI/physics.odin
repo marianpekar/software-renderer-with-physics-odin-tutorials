@@ -55,7 +55,7 @@ ApplyFriction :: proc(model: ^Model, other: Model) {
 
 IntegrateLinearForce :: proc(model: ^Model, deltaTime: f32) {
     rb := &model.rigidBody.(RigidBody)
-    rb.velocity += rb.force * deltaTime
+    rb.velocity += rb.force * rb.massInverse * deltaTime
     rb.force = {}
     rb.velocity *= LINEAR_DRAG
     model.translation += rb.velocity * deltaTime
