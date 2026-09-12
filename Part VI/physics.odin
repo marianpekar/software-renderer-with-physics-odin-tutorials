@@ -6,7 +6,6 @@ RigidBody :: struct {
     isStatic: bool,
     bounciness: f32,
     friction: f32,
-    mass: f32,
     massInverse: f32
 }
 

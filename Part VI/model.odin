@@ -29,7 +29,6 @@ LoadModel :: proc(meshPath: string, texturePath: cstring, color: rl.Color = rl.W
 
 AddRigidbody :: proc(model: ^Model, isStatic: bool = false, bounciness: f32 = 1.0, friction: f32 = 0.5, mass: f32 = 1.0) {
     model.rigidBody = RigidBody{
-        mass = mass,
         massInverse = 1.0 / mass,
         bounciness = bounciness,
         friction = friction,
