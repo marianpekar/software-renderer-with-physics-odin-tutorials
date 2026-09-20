@@ -30,16 +30,9 @@ ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
     rb := &model.rigidBody.(RigidBody)
     rb.velocity += GRAVITY * deltaTime
 
-    for &other in models {
-        if &other == model do continue
-
-        model.translation.y -= GROUND_PROBE_DIST
-        probe := GetCollisionResult(model, &other)
-        model.translation.y += GROUND_PROBE_DIST
-
-        if probe.hit {
-            ApplyFriction(model, other)
-        }
+    ray := CastRayFromWorldPosition(model.translation.y + model.scale * 0.5, -WORLD_UP, models, GROUND_PROBE_DIST)
+    if ray.hit {
+        ApplyFriction(model, ray.model^)
     }
 }
 

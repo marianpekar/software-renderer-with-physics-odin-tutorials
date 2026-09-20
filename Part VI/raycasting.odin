@@ -8,7 +8,7 @@ Ray :: struct {
     direction: Vector3
 }
 
-CastRayFromWorldPosition :: proc(origin: Vector3, direction: Vector3, models: []Model) -> Ray {
+CastRayFromWorldPosition :: proc(origin: Vector3, direction: Vector3, models: []Model, maxLenght: f32 = max(f32)) -> Ray {
     ray: Ray
     ray.direction = direction
     closestDist := max(f32)
@@ -21,7 +21,7 @@ CastRayFromWorldPosition :: proc(origin: Vector3, direction: Vector3, models: []
         size := model.collider * model.scale
 
         tMin :=  f32(0)
-        tMax :=  max(f32)
+        tMax :=  maxLenght
         hit := true
 
         for i in 0..<3 {
