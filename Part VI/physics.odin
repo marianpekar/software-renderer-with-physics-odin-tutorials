@@ -30,7 +30,7 @@ ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
     rb := &model.rigidBody.(RigidBody)
     rb.velocity += GRAVITY * deltaTime
 
-    ray := CastRayFromWorldPosition(model.translation.y + model.scale * 0.5, -WORLD_UP, models, GROUND_PROBE_DIST)
+    ray := CastRayFromWorldPosition(model.translation.y, -WORLD_UP, models, model.scale * 0.5 + GROUND_PROBE_DIST, model)
     if ray.hit {
         ApplyFriction(model, ray.model^)
     }

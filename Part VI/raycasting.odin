@@ -8,12 +8,14 @@ Ray :: struct {
     direction: Vector3
 }
 
-CastRayFromWorldPosition :: proc(origin: Vector3, direction: Vector3, models: []Model, maxLenght: f32 = max(f32)) -> Ray {
+CastRayFromWorldPosition :: proc(origin: Vector3, direction: Vector3, models: []Model, maxLenght: f32 = max(f32), ignore: ^Model = nil) -> Ray {
     ray: Ray
     ray.direction = direction
     closestDist := max(f32)
 
     for &model in models {
+        if &model == ignore do continue
+            
         center := model.translation
         delta := center - origin
 
