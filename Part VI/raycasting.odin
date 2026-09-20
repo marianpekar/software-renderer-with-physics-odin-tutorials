@@ -8,19 +8,14 @@ Ray :: struct {
     direction: Vector3
 }
 
-CastRay :: proc(screenX, screenY: f32, camera: Camera, projType: ProjectionType, models: []Model) -> Ray {
-    ndcX := (screenX / f32(SCREEN_WIDTH)) * 2.0 - 1.0
-    ndcY := (screenY / f32(SCREEN_HEIGHT)) * 2.0 - 1.0
-
-    rayOrigin := GetRayOrigin(ndcX, ndcY, camera, projType)
-
+CastRayFromWorldPosition :: proc(origin: Vector3, direction: Vector3, models: []Model) -> Ray {
     ray: Ray
-    ray.direction = GetRayDirection(ndcX, ndcY, camera, projType)
+    ray.direction = direction
     closestDist := max(f32)
 
     for &model in models {
         center := model.translation
-        delta := center - rayOrigin
+        delta := center - origin
 
         axes := GetAxesFromRotationMatrix(model.rotationMatrix)
         size := model.collider * model.scale
@@ -61,9 +56,21 @@ CastRay :: proc(screenX, screenY: f32, camera: Camera, projType: ProjectionType,
         if hit && tMin < closestDist {
             closestDist = tMin
             ray.hit = true
+            ray.direction = direction
             ray.model = &model
         }
     }
+
+    return ray
+}
+
+CastRayFromScreenPosition :: proc(screenX, screenY: f32, camera: Camera, projType: ProjectionType, models: []Model) -> Ray {
+    ndcX := (screenX / f32(SCREEN_WIDTH)) * 2.0 - 1.0
+    ndcY := (screenY / f32(SCREEN_HEIGHT)) * 2.0 - 1.0
+
+    rayOrigin := GetRayOrigin(ndcX, ndcY, camera, projType)
+    rayDirection := GetRayDirection(ndcX, ndcY, camera, projType)
+    ray := CastRayFromWorldPosition(rayOrigin, rayDirection, models)
 
     return ray
 
