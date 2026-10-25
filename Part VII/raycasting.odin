@@ -5,7 +5,7 @@ import "core:math"
 Ray :: struct {
     hit: bool,
     model: ^Model,
-    position: Vector3,
+    contact_point: Vector3,
     direction: Vector3
 }
 
@@ -60,7 +60,7 @@ CastRayFromWorldPosition :: proc(origin: Vector3, direction: Vector3, models: []
             closestDist = tMin
             ray.hit = true
             ray.direction = direction
-            ray.position = origin + direction * tMin
+            ray.contact_point = origin + direction * tMin
             ray.model = &model
         }
     }
