@@ -50,7 +50,7 @@ HandleInputs :: proc(
         ray := CastRayFromScreenPosition(f32(rl.GetMouseX()), f32(rl.GetMouseY()), camera, projType^, models)
         if ray.hit {
             if poke {
-                AddForceAtPoint(ray.model, ray.direction * pushForce, ray.contact_point)
+                AddForceAtPoint(ray.model, ray.direction * pushForce, ray.contactPoint)
             }
             else if freeze {
                 rb, has_rb := &ray.model.rigidBody.(RigidBody)
