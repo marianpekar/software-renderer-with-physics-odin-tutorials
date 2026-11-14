@@ -112,8 +112,7 @@ ApplyStabilization :: proc(model: ^Model, normal: Vector3) {
 ApplyTipping :: proc(model: ^Model, contactPoint: Vector3, overhang: Vector2) {
     rContact := model.translation - contactPoint
     gravTorque := Vector3CrossProduct(rContact, GRAVITY)
-    if overhang.x > 1e-6 do gravTorque.x -= overhang.x
-    if overhang.y > 1e-6 do gravTorque.z -= overhang.y
+    gravTorque.xz -= overhang.xy
     rb := &model.rigidBody.(RigidBody)
     rb.torque += Vector3Normalize(gravTorque) * rb.mass * TIPPING_STRENGTH
 }
