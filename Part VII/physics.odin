@@ -51,7 +51,7 @@ ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
             overhang := GetOverhang(model, other)
             surfaceAngle := math.acos(abs(Vector3DotProduct(probe.normal, WORLD_UP)))
 
-            if (overhang.x > 1e-6 || overhang.y > 1e-6) && probe.normal.y <= -0.5 {
+            if overhang.x > 0 || overhang.y > 0 {
                 ApplyTipping(model, probe.contactPoint, overhang)
             }
 
