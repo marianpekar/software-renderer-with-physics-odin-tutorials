@@ -37,8 +37,6 @@ ApplyPhysics :: proc(models: []Model, deltaTime: f32) {
 }
 
 ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
-    isGrounded := false
-
     for &other in models {
         if &other == model do continue
 
@@ -53,10 +51,6 @@ ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
             overhang := GetOverhang(model, other)
             surfaceAngle := math.acos(abs(Vector3DotProduct(probe.normal, WORLD_UP)))
 
-            if overhang.x <= 1e-6 && overhang.y <= 1e-6 && surfaceAngle < SLIDE_ANGLE_THRESHOLD {
-                isGrounded = true
-            }
-
             if (overhang.x > 1e-6 || overhang.y > 1e-6) && probe.normal.y <= -0.5 {
                 ApplyTipping(model, probe.contactPoint, overhang)
             }
@@ -66,10 +60,7 @@ ApplyGravity :: proc(model: ^Model, models: []Model, deltaTime: f32) {
     }
 
     rb := &model.rigidBody.(RigidBody)
-
-    if !isGrounded {
-        rb.velocity += GRAVITY * deltaTime
-    }
+    rb.velocity += GRAVITY * deltaTime
 }
 
 ApplyFriction :: proc(model: ^Model, other: Model) {
