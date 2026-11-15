@@ -74,7 +74,7 @@ ApplyStabilization :: proc(model: ^Model, normal: Vector3) {
     closestUp  := FindClosestUpAxis(model.rotationMatrix, normal)
     correction := Vector3CrossProduct(closestUp, normal)
     rb := &model.rigidBody.(RigidBody)
-    rb.torque += correction * STABILIZATION_STRENGTH
+    rb.torque += correction * rb.mass * STABILIZATION_STRENGTH
 
     FindClosestUpAxis :: proc(rotationMatrix: Matrix4x4, referenceUp: Vector3) -> Vector3 {
         axes := GetAxesFromRotationMatrix(rotationMatrix)
